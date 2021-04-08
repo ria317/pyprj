@@ -19,31 +19,41 @@
 ## 보통 nlogn, n
 
 
-def dfs(x, y, visited, a, b ):
+def dfs(x, y, visit, a, b ):
+
     # 범위 벗어나면 false
-    print("idx:", x,",", y)
-    if( x>= a or y >= b ):
+    if x>= a or y >= b :
         return False
 
-    # 이미 방문한 경로 fail
-    if visited[x][y] == True:
-        return False
+    #종료지점까지 왔을 때
+    if x == a-1 and y == b-1 :
+        visit.append([x,y])
+        #tot_list.append(visit)
+        print(visit)
+        return True
 
-    visited[x][y] = True
-    print(x,",", y)
+    while 1:
+        if len(visit) == 0 :
+            visit.append([x,y])
+            break
+        cmp = visit.pop()
+        c_x = cmp[0]
+        c_y = cmp[1]
 
-    dfs(x+1, y, visited, a, b)
-    dfs(x, y+1, visited, a, b)
-    return True
- 
+        if x+y == c_x + c_y +1 :
+            visit.append([c_x, c_y])
+            visit.append([x,y])
+            break
+
+
+
+    dfs(x+1, y, visit, a, b)
+    dfs(x, y+1, visit, a, b)
 
 def solve(a, b):
 
-    visited = [[False]*b]*a
-    graph = []
-
-    print(visited)
-    dfs( 0, 0, visited, a , b)
+    visit = []
+    #footprint = [[False]*b]*a
+    dfs( 0, 0, visit, a , b)
 
 solve(3,4)
-
